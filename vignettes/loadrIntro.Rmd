@@ -1,0 +1,78 @@
+---
+title: "An introduction to loadr"
+author: "Nathan Sheffield"
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{An introduction to loadr}
+output: knitr:::html_vignette
+---
+
+# An introduction to loadr
+
+## Motivation
+
+In a large, complex R analysis, I often find myself with dozens of resource data objects that I use as a reference for my computation. These are usually some kind of large dataset that I read into R and then use as reference data. As an example, I have a file with a big matrix with values from chromatin accessibility for 120 different cell-types across about a million different genomic regions (so, a 120-by-1 million matrix). I read this into my R sessions occasionally when I want to see, for example, how a new set of regions looks across that data resource. I'm not really changing the resource data, I'm just using it as a reference. I may load dozens of these kinds of resources into a single R session, and I want to re-use them across multiple scripts and multiple sessions, so I find myself reading them in a lot. I also start writing functions around these kinds of resources.
+
+Given this complexity, sometimes it gets confusing for me to keep track of all the variables I keep in my primary R workspace, so I started to investigate how I could use R `environments` to declutter things. I discovered that I could load these kinds of "shared data reference" sets into a separate R environment, let's call it `SV` for "Shared Variables" -- and then they don't clutter my primary R workspace and I can still access them with `SV$variable`. This cleaned things up a bit for me and so I've developed a series of functions that make it really easy to interact with reference data like this kept in its own separate environment. That's what `loadr` is.
+
+Before we start loading data, it's important to tell `loadr` the name of the environment where I want to store these reference objects. `loadr` uses a global variable (`LOADRENV`) to keep track of this environment name and provides a getter/setter function (`loadrEnv()`) to change or retrieve this. By default, we'll use an environment named `SV`. To make it explicit, just do this:
+
+```{r Try it out}
+library(loadr)
+loadrEnv("SV")
+```
+
+Now, let's generate some random data and load it into that environment with `loadr` functions:
+
+```{r}
+eload(list(sampleData = rnorm(1e7, 0,1)))
+```
+
+If you now look at the R objects in your workspace, you won't see an object named `sampleData`, but you will see one named `SV`:
+
+```{r}
+ls()
+```
+
+The `sampleData` object has been put in the `SV` environment:
+
+```{r}
+ls(envir=SV)
+```
+
+We can get that `sampleData` object back like this:
+
+```{r}
+head(SV$sampleData)
+```
+
+If you have multiple objects to load at the same time, no problem; `eload` takes a named list:
+
+```{r}
+eload(list(x=5, y=7))
+```
+
+In practice, I write functions that load up data and then I want to load up the results of these functions. Let's define a function that will read data from a (potentially large) file:
+
+```{r}
+loadMyData = function() {
+	filePath = system.file("extdata", "mydata.txt", package="loadr")
+	myData = read.table(filePath)
+	return(myData)
+}
+```
+
+Now we can use the `vload` function to load that data into the shared environment:
+
+```{r}
+vload(loadMyData(), varNames="myvector")
+```
+
+And access it with:
+
+
+```{r}
+SV$myvector
+```
+
