@@ -23,16 +23,17 @@ library(loadr)
 loadrEnv("SV")
 ```
 
-Now, let's generate some random data and load it into that environment with `loadr` functions:
+(This is optional, `SV` is the default environment name. You can also use this to name your shared variable environment something else). Now, let's generate some random data and load it into that environment with `loadr` functions:
 
 ```{r}
 eload(list(sampleData = rnorm(1e7, 0,1)))
 ```
 
-If you now look at the R objects in your workspace, you won't see an object named `sampleData`, but you will see one named `SV`:
+Notice that the `eload` function takes a *named list*. The name of item in the list becomes the variable name of the object. If you now look at the R objects in your workspace, you won't see an object named `sampleData`, but you will see one named `SV`, which is a object of type `environment`:
 
 ```{r}
 ls()
+class(SV)
 ```
 
 The `sampleData` object has been put in the `SV` environment:
@@ -47,10 +48,18 @@ We can get that `sampleData` object back like this:
 head(SV$sampleData)
 ```
 
-If you have multiple objects to load at the same time, no problem; `eload` takes a named list:
+If you have multiple objects to load at the same time, no problem:
 
 ```{r}
 eload(list(x=5, y=7))
+```
+
+The function has notified us that the `x` and `y` objects are newly loaded in to the shared variable environment. What happens if we try to load objects with the same name? They will get updated:
+
+```{r}
+eload(list(x=526, y=234))
+SV$x
+SV$y
 ```
 
 In practice, I write functions that load up data and then I want to load up the results of these functions. Let's define a function that will read data from a (potentially large) file:
@@ -63,16 +72,64 @@ loadMyData = function() {
 }
 ```
 
-Now we can use the `vload` function to load that data into the shared environment:
-
 ```{r}
-vload(loadMyData(), varNames="myvector")
-```
-
-And access it with:
-
-
-```{r}
+eload(list(myvector=loadMyData()))
 SV$myvector
 ```
 
+## Loading local variables or variably named variables with `vload`
+
+What if I just want to load a local R variable, `myLocalVar`, under its current name?  `eload(myLocalVar)` doesn't work because there is no named list of variables, so that will fail. It's possibe but a bit cumbersome to use `eload(list(myLocalVar=myLocalVar))`.
+
+Here's where an alias called `vload()` can help:
+
+```{r}
+myLocalVar = 15
+vload(myLocalVar)
+
+```
+
+`vload` can accept any number of variables:
+
+```{r}
+myLocalVar2 = 22
+myLocalVar3 = 31
+vload(myLocalVar2, myLocalVar3)
+```
+
+You can also use `vload` with a special named argument `varNames` to assign the objects to variably named variables. For example:
+
+```{r}
+myLocalVar4 = 15
+vload(myLocalVar2, myLocalVar3, varNames=c("var1", "var2"))
+```
+
+To see how this could be useful, let's imagine our data loading function depends on some variable which is script dependent, like the reference genome assembly:
+
+
+```{r}
+loadMyData = function(genome) {
+	filePath = system.file("extdata", "mydata.txt", package="loadr")
+	myData = read.table(filePath)
+	return(myData)
+}
+```
+
+Let's load up some data from this function for a few different genomes at the same time:
+
+```{r}
+genome="hg19"
+vload(loadMyData(genome), varNames=paste0("myvector_", genome))
+
+genome="mm10"
+vload(loadMyData(genome), varNames=paste0("myvector_", genome))
+```
+
+An easier way to accomplish the same thing that will be to just `lapply` across our list of genomes:
+
+```{r}
+genomes=c("hg19", "mm10")
+res = lapply(genomes, function(genome) { 
+	vload(loadMyData(genome), varNames=paste0("myvector_", genome))
+	})
+```
