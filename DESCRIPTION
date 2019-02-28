@@ -12,7 +12,6 @@ Authors@R: person("Nathan", "Sheffield", email = "nathan@code.databio.org",
 Suggests:
     knitr,
     testthat
-Enhances: pepr
 VignetteBuilder: knitr
 License: BSD_2_clause + file LICENSE
 Encoding: UTF-8
