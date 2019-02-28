@@ -2,13 +2,12 @@
 % Please edit documentation in R/loadr.R
 \name{eload}
 \alias{eload}
-\title{Loader of mapping of names to values into variables within an environment}
+\title{Loads named variables into a shared environment}
 \usage{
 eload(loadDat, loadEnvir = loadrEnv(), preserve = FALSE)
 }
 \arguments{
-\item{loadDat}{Collection of bindings between name and value, e.g. a 
-\code{list} or \code{environment}}
+\item{loadDat}{A \code{list} or \code{environment} with named variables to load.}
 
 \item{loadEnvir}{Name (character string) for the environment to create or
 update.}
@@ -16,9 +15,10 @@ update.}
 \item{preserve}{Whether to retain the value for an already-bound name.}
 }
 \description{
-\code{eload} takes a collection of bindings between name and value and 
-uses those bindings to create or update an environment. A value for 
-preserved according to the argument to \code{preserve}. If you want to load
-directly into the current env, look at \code{list2env} with
+\code{eload} takes a collection of named objects and creates or updates an
+environment. By default, an existing variable in the target environment will
+be replaced by a new value, but this can be avoided by setting
+\code{preserve=TRUE}. If you want to load directly into the current env, look
+at \code{list2env} with
 \code{environment()}
 }

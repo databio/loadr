@@ -7,6 +7,9 @@ Gives a list of shared variable contents.}
 \usage{
 sv(envir = "SV")
 }
+\arguments{
+\item{envir}{Character vector name of the environment to display.}
+}
 \description{
 Show shared variables
 Gives a list of shared variable contents.

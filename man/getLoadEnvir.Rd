@@ -3,13 +3,15 @@
 \name{getLoadEnvir}
 \alias{getLoadEnvir}
 \title{A function used by eload() to create the global shared variable
-repository if it doesn't exist, or return it if it does.
-Internal function.}
+environment if it doesn't exist, or return it if it does.}
 \usage{
 getLoadEnvir(loadEnvir = loadrEnv())
 }
+\arguments{
+\item{loadEnvir}{Name of the environment to get.
+Internal function.}
+}
 \description{
 A function used by eload() to create the global shared variable
-repository if it doesn't exist, or return it if it does.
-Internal function.
+environment if it doesn't exist, or return it if it does.
 }

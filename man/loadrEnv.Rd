@@ -2,7 +2,7 @@
 % Please edit documentation in R/loadr.R
 \name{loadrEnv}
 \alias{loadrEnv}
-\title{Sets or getsa global variable specifying the default environment name for
+\title{Sets or gets a global variable specifying the default environment name for
 \code{\link{loadr}}.}
 \usage{
 loadrEnv(envName = NULL)
@@ -12,7 +12,7 @@ loadrEnv(envName = NULL)
 Leave NULL to retrieve current environment name.}
 }
 \description{
-Sets or getsa global variable specifying the default environment name for
+Sets or gets a global variable specifying the default environment name for
 \code{\link{loadr}}.
 }
 \examples{

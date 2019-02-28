@@ -14,13 +14,14 @@ NULL
 
 #' Show shared variables
 #' Gives a list of shared variable contents.
+#' @param envir Character vector name of the environment to display.
 #' @export
 sv = function(envir="SV") {
 	envirToCheck = getLoadEnvir(envir)
 	sapply(envirToCheck, length)
 }
 
-#' Sets or getsa global variable specifying the default environment name for
+#' Sets or gets a global variable specifying the default environment name for
 #' \code{\link{loadr}}.
 #'
 #' @param envName Name of environment where shared variables should be stored.
@@ -73,7 +74,8 @@ vload = function(..., varNames=NULL) {
 
 
 #' A function used by eload() to create the global shared variable
-#' repository if it doesn't exist, or return it if it does.
+#' environment if it doesn't exist, or return it if it does.
+#' @param loadEnvir Name of the environment to get.
 #' Internal function.
 getLoadEnvir = function(loadEnvir=loadrEnv()) {
 	if (!exists(loadEnvir)) { 
@@ -85,17 +87,16 @@ getLoadEnvir = function(loadEnvir=loadrEnv()) {
 }
 
 
-#' Loader of mapping of names to values into variables within an environment
+#' Loads named variables into a shared environment
 #'
-#' \code{eload} takes a collection of bindings between name and value and 
-#' uses those bindings to create or update an environment. A value for 
-#  an already-bound name in the target environment may be either replaced or 
-#' preserved according to the argument to \code{preserve}. If you want to load
-#' directly into the current env, look at \code{list2env} with
+#' \code{eload} takes a collection of named objects and creates or updates an
+#' environment. By default, an existing variable in the target environment will
+#' be replaced by a new value, but this can be avoided by setting
+#' \code{preserve=TRUE}. If you want to load directly into the current env, look
+#' at \code{list2env} with
 #' \code{environment()}
 #'
-#' @param loadDat Collection of bindings between name and value, e.g. a 
-#'                \code{list} or \code{environment}
+#' @param loadDat A \code{list} or \code{environment} with named variables to load.
 #' @param loadEnvir Name (character string) for the environment to create or
 #'     update.
 #' @param preserve Whether to retain the value for an already-bound name.
@@ -131,8 +132,15 @@ eload = function(loadDat, loadEnvir=loadrEnv(), preserve=FALSE) {
 
 	# In the global environment, bind the given name to the environment.
 	assign(loadEnvir, localEnvir, pos=globalenv())
-
-	message("Newly Loaded: ", paste0(added, collapse=", "))
-	message("Updated: ", paste0(updated, collapse=", "))
-	message("Unchanged: ", paste0(setdiff(existing, updated), collapse=", "))
+	
+	if (length(added) > 0){
+		message("Newly Loaded: ", paste0(added, collapse=", "))
+	}
+	if (length(updated) > 0){
+		message("Updated: ", paste0(updated, collapse=", "))
+	}
+	unchanged = setdiff(existing, updated)
+	if (length(unchanged) > 0){
+		message("Unchanged: ", paste0(unchanged, collapse=", "))
+	}
 }
