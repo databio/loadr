@@ -16,3 +16,12 @@ test_that("eload", {
 	vload(y)
 	expect_equal(SV$y, 15)
 })
+
+
+test_that("preserve", {
+	eload(list(x=5))
+
+	# don't overwrite
+	eload(list(x=7), preserve=TRUE)
+	expect_equal(SV$x, 5)
+})
