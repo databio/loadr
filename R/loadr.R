@@ -100,8 +100,10 @@ getLoadEnvir = function(loadEnvir=loadrEnv()) {
 #' @param loadEnvir Name (character string) for the environment to create or
 #'     update.
 #' @param preserve Whether to retain the value for an already-bound name.
+#' @param parentEnvir Parent environment of the shared variable environment;
+#'     defaults to \code{globalenv()}
 #' @export
-eload = function(loadDat, loadEnvir=loadrEnv(), preserve=FALSE) {
+eload = function(loadDat, loadEnvir=loadrEnv(), preserve=FALSE, parentEnvir=globalenv()) {
 	if (is.null(loadEnvir)) {
 		# Got a NULL environment. Create a default environment
 		message("NULL environment; using environment SV...")
@@ -131,7 +133,7 @@ eload = function(loadDat, loadEnvir=loadrEnv(), preserve=FALSE) {
 	}
 
 	# In the global environment, bind the given name to the environment.
-	assign(loadEnvir, localEnvir, pos=globalenv())
+	assign(loadEnvir, localEnvir, pos=parentEnvir)
 	
 	if (length(added) > 0){
 		message("Newly Loaded: ", paste0(added, collapse=", "))

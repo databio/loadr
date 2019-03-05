@@ -4,7 +4,8 @@
 \alias{eload}
 \title{Loads named variables into a shared environment}
 \usage{
-eload(loadDat, loadEnvir = loadrEnv(), preserve = FALSE)
+eload(loadDat, loadEnvir = loadrEnv(), preserve = FALSE,
+  parentEnvir = globalenv())
 }
 \arguments{
 \item{loadDat}{A \code{list} or \code{environment} with named variables to load.}
@@ -13,6 +14,9 @@ eload(loadDat, loadEnvir = loadrEnv(), preserve = FALSE)
 update.}
 
 \item{preserve}{Whether to retain the value for an already-bound name.}
+
+\item{parentEnvir}{Parent environment of the shared variable environment;
+defaults to \code{globalenv()}}
 }
 \description{
 \code{eload} takes a collection of named objects and creates or updates an

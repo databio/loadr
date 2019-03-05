@@ -1,5 +1,11 @@
 
-# loadr 0.1  - 2019-02-28
+# loadr 0.1.1  - 2019-02-28
+
+## Changed
+
+* added parameter so parent environment is user-selectable
+
+# loadr 0.1.0  - 2019-02-28
 
 ## Changed
 
