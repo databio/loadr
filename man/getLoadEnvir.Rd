@@ -15,6 +15,3 @@ Internal function.}
 A function used by eload() to create the global shared variable
 environment if it doesn't exist, or return it if it does.
 }
-\examples{
-getLoadEnvir()
-}
