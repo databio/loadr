@@ -1,10 +1,10 @@
 Package: loadr
-Version: 0.1.1
+Version: 0.1.2
 Date: 2019-02-28
-Title: Cleaner R Workspaces with Shared Variable Environments
-Description: Provides intuitive functions for loading R objects into
-    environments, encouraging less cluttered R workspaces and sharing variables
-    with large or reusable data across R users and sessions of R analysis. The user
+Title: Cleaner Workspaces with Shared Variable Environments
+Description: Provides intuitive functions for loading objects into
+    environments, encouraging less cluttered workspaces and sharing variables
+    with large or reusable data across users and sessions. The user
     provides named variables which are loaded into the variable environment for
     later retrieval.
 Authors@R: person("Nathan", "Sheffield", email = "nathan@code.databio.org",
