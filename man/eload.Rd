@@ -26,3 +26,7 @@ be replaced by a new value, but this can be avoided by setting
 at \code{list2env} with
 \code{environment()}
 }
+\examples{
+eload(list(x=15))
+SV$x
+}

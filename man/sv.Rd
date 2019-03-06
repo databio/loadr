@@ -14,3 +14,6 @@ sv(envir = "SV")
 Show shared variables
 Gives a list of shared variable contents.
 }
+\examples{
+sv()
+}

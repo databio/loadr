@@ -16,6 +16,8 @@ NULL
 #' Gives a list of shared variable contents.
 #' @param envir Character vector name of the environment to display.
 #' @export
+#' @examples
+#' sv()
 sv = function(envir="SV") {
 	envirToCheck = getLoadEnvir(envir)
 	sapply(envirToCheck, length)
@@ -77,6 +79,8 @@ vload = function(..., varNames=NULL) {
 #' environment if it doesn't exist, or return it if it does.
 #' @param loadEnvir Name of the environment to get.
 #' Internal function.
+#' @examples
+#' getLoadEnvir()
 getLoadEnvir = function(loadEnvir=loadrEnv()) {
 	if (!exists(loadEnvir)) { 
 		loadEnvir = new.env(parent=emptyenv())
@@ -103,6 +107,9 @@ getLoadEnvir = function(loadEnvir=loadrEnv()) {
 #' @param parentEnvir Parent environment of the shared variable environment;
 #'     defaults to \code{globalenv()}
 #' @export
+#' @examples
+#' eload(list(x=15))
+#' SV$x
 eload = function(loadDat, loadEnvir=loadrEnv(), preserve=FALSE, parentEnvir=globalenv()) {
 	if (is.null(loadEnvir)) {
 		# Got a NULL environment. Create a default environment
