@@ -79,8 +79,6 @@ vload = function(..., varNames=NULL) {
 #' environment if it doesn't exist, or return it if it does.
 #' @param loadEnvir Name of the environment to get.
 #' Internal function.
-#' @examples
-#' getLoadEnvir()
 getLoadEnvir = function(loadEnvir=loadrEnv()) {
 	if (!exists(loadEnvir)) { 
 		loadEnvir = new.env(parent=emptyenv())
