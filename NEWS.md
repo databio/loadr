@@ -1,3 +1,8 @@
+# loadr 0.1.2  - 2019-03-05
+
+## Changed
+
+* added examples and simplified description
 
 # loadr 0.1.1  - 2019-02-28
 
