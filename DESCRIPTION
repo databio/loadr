@@ -1,6 +1,6 @@
 Package: loadr
-Version: 0.1.2
-Date: 2019-03-06
+Version: 0.1.3
+Date: 2021-04-16
 Title: Cleaner Workspaces with Shared Variable Environments
 Description: Provides intuitive functions for loading objects into
     environments, encouraging less cluttered workspaces and sharing variables
