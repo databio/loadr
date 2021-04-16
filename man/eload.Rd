@@ -4,8 +4,12 @@
 \alias{eload}
 \title{Loads named variables into a shared environment}
 \usage{
-eload(loadDat, loadEnvir = loadrEnv(), preserve = FALSE,
-  parentEnvir = globalenv())
+eload(
+  loadDat,
+  loadEnvir = loadrEnv(),
+  preserve = FALSE,
+  parentEnvir = globalenv()
+)
 }
 \arguments{
 \item{loadDat}{A \code{list} or \code{environment} with named variables to load.}

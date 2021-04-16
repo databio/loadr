@@ -18,4 +18,4 @@ License: BSD_2_clause + file LICENSE
 Encoding: UTF-8
 URL: https://www.github.com/databio/loadr
 BugReports: https://www.github.com/databio/loadr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
