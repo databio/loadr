@@ -3,13 +3,12 @@
 \docType{package}
 \name{loadr}
 \alias{loadr}
-\alias{loadr-package}
 \title{Cleaner R workspaces.}
 \description{
 Functions for loading data into a shared variable environment
 }
 \references{
-\url{http://github.com/databio/loadr}
+\url{https://github.com/databio/loadr}
 }
 \author{
 Nathan Sheffield

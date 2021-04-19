@@ -1,3 +1,9 @@
+# loadr 0.1.3 - 2021-04-16
+
+## Changed
+
+* Accommodate knitr change by adding rmarkdown to suggests
+
 # loadr 0.1.2  - 2019-03-05
 
 ## Changed

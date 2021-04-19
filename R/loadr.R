@@ -7,7 +7,7 @@
 #' @name loadr
 #' @author Nathan Sheffield
 #'
-#' @references \url{http://github.com/databio/loadr}
+#' @references \url{https://github.com/databio/loadr}
 NULL
 
 # 
